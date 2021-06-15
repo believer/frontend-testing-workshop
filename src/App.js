@@ -1,15 +1,26 @@
-import { AppContext, useApp } from './AppContext'
+import { useQuery, QueryClient, QueryClientProvider } from 'react-query'
 
-export const Text = () => {
-  const { text } = useApp()
+const queryClient = new QueryClient()
 
-  return <div>{text}</div>
+const fetchLuke = async () => {
+  const response = await fetch('https://swapi.dev/api/people/1/')
+  return response.json()
 }
 
-export default function App({ text }) {
+const Luke = () => {
+  const { isLoading, data } = useQuery('luke', fetchLuke)
+
+  if (isLoading) {
+    return <div>Loading...</div>
+  }
+
+  return <div>{data.name}</div>
+}
+
+export default function App() {
   return (
-    <AppContext.Provider value={{ text }}>
-      <Text />
-    </AppContext.Provider>
+    <QueryClientProvider client={queryClient}>
+      <Luke />
+    </QueryClientProvider>
   )
 }
