@@ -1,6 +1,22 @@
 import App from './App'
 import { screen, render } from '@testing-library/react'
 
-test.todo('renders loading state')
+beforeEach(() => {
+  global.fetch = jest.fn().mockResolvedValue({
+    json: jest.fn().mockResolvedValue({
+      name: 'Luke Skywalker',
+    }),
+  })
+})
 
-test.todo('renders data')
+test('renders loading state', () => {
+  render(<App />)
+
+  expect(screen.getByText(/loading.../i)).toBeInTheDocument()
+})
+
+test('renders data', async () => {
+  render(<App />)
+
+  expect(await screen.findByText(/luke skywalker/i)).toBeInTheDocument()
+})
