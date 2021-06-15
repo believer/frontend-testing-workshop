@@ -1,8 +1,24 @@
 import { act, renderHook } from '@testing-library/react-hooks'
 import { useCustomHook } from './useCustomHook'
 
-test.todo('custom hook return state')
+test('custom hook return state', () => {
+  const { result } = renderHook(() => useCustomHook())
 
-test.todo('custom hook with custom initial value')
+  expect(result.current[0]).toEqual('Initial')
+})
 
-test.todo('custom hook with updater')
+test('custom hook with custom initial value', () => {
+  const { result } = renderHook(() => useCustomHook('newInitial'))
+
+  expect(result.current[0]).toEqual('newInitial')
+})
+
+test('custom hook with updater', () => {
+  const { result } = renderHook(() => useCustomHook())
+
+  act(() => {
+    result.current[1]('newInitial')
+  })
+
+  expect(result.current[0]).toEqual('newInitial')
+})
