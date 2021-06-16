@@ -19,4 +19,5 @@ test('renders data', async () => {
   render(<App />)
 
   expect(await screen.findByText(/mocked skywalker/i)).toBeInTheDocument()
+  expect(screen.queryByText(/loading.../i)).not.toBeInTheDocument()
 })
