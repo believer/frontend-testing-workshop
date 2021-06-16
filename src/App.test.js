@@ -4,7 +4,7 @@ import { screen, render } from '@testing-library/react'
 beforeEach(() => {
   global.fetch = jest.fn().mockResolvedValue({
     json: jest.fn().mockResolvedValue({
-      name: 'Luke Skywalker',
+      name: 'Mocked Skywalker',
     }),
   })
 })
@@ -18,5 +18,5 @@ test('renders loading state', () => {
 test('renders data', async () => {
   render(<App />)
 
-  expect(await screen.findByText(/luke skywalker/i)).toBeInTheDocument()
+  expect(await screen.findByText(/mocked skywalker/i)).toBeInTheDocument()
 })
